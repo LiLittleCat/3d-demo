@@ -1,0 +1,72 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.app-container {
+  margin-top: 2rem;
+}
+
+.app-title {
+  margin-bottom: 1.5rem;
+}
+
+.input-section, .list-section {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.scene-container {
+  height: 70vh;
+  overflow: hidden;
+}
+
+.point-input-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.point-input-field {
+  flex: 1;
+  min-width: 100px;
+}
+
+.add-point-button {
+  flex: 1;
+  min-width: 120px;
+}
+
+.point-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.point-list-text {
+  flex-grow: 1;
+}
+
+.point-list-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-point-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.edit-point-field {
+  flex: 1;
+}
+
+.update-point-button {
+  min-width: 80px;
+}
