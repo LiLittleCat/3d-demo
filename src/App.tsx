@@ -32,12 +32,12 @@ function App() {
   };
 
   return (
-    <Container maxWidth={false} className="app-container">
+    <Container maxWidth={false} disableGutters className="app-container">
       <Typography variant="h4" component="h1" className="app-title">
-        3D 点坐标可视化
+        3D 点可视化工具
       </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+      <Grid container spacing={2} style={{ height: 'calc(100vh - 80px)' }}>
+        <Grid item xs={12} md={4} style={{ height: '100%', overflowY: 'auto' }}>
           <Paper elevation={3} className="input-section">
             <Typography variant="h6" gutterBottom>
               添加新点
@@ -56,7 +56,7 @@ function App() {
             />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <Paper elevation={3} className="scene-container">
             <ThreeScene 
               points={points} 
