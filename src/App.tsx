@@ -8,6 +8,7 @@ import './App.css';
 
 function App() {
   const [points, setPoints] = useState<Point[]>([]);
+  const [focusPoint, setFocusPoint] = useState<Point | null>(null);
 
   const addPoint = (point: Point) => {
     setPoints([...points, point]);
@@ -19,6 +20,15 @@ function App() {
 
   const updatePoint = (index: number, updatedPoint: Point) => {
     setPoints(points.map((p, i) => i === index ? updatedPoint : p));
+  };
+
+  const handleFocusPoint = (point: Point) => {
+    setFocusPoint(null);  // 先清除焦点
+    setTimeout(() => setFocusPoint(point), 0);  // 然后在下一个事件循环中设置新的焦点
+  };
+
+  const handleResetView = () => {
+    setFocusPoint(null);  // 重置视图时清除焦点
   };
 
   return (
@@ -41,13 +51,18 @@ function App() {
             <PointList 
               points={points} 
               onDeletePoint={deletePoint} 
-              onUpdatePoint={updatePoint} 
+              onUpdatePoint={updatePoint}
+              onFocusPoint={handleFocusPoint}
             />
           </Paper>
         </Grid>
         <Grid item xs={12} md={8}>
           <Paper elevation={3} className="scene-container">
-            <ThreeScene points={points} />
+            <ThreeScene 
+              points={points} 
+              focusPoint={focusPoint} 
+              onResetView={handleResetView}
+            />
           </Paper>
         </Grid>
       </Grid>

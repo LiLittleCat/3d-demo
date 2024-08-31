@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import * as THREE from 'three';
@@ -7,6 +7,8 @@ import { Button, ThemeProvider, createTheme } from '@mui/material';
 
 interface ThreeSceneProps {
   points: Point[];
+  focusPoint: Point | null;
+  onResetView: () => void;
 }
 
 const darkTheme = createTheme({
@@ -87,19 +89,28 @@ function AxisArrows({ visible }: { visible: boolean }) {
   return null;
 }
 
-function CameraController({ controlsRef }: { controlsRef: React.RefObject<any> }) {
+function CameraController({ controlsRef, focusPoint }: { controlsRef: React.RefObject<any>, focusPoint: Point | null }) {
   const { camera, gl } = useThree();
   useFrame(() => controlsRef.current.update());
+
+  useEffect(() => {
+    if (focusPoint) {
+      camera.position.set(focusPoint.x + 5, focusPoint.y + 5, focusPoint.z + 5);
+      controlsRef.current.target.set(focusPoint.x, focusPoint.y, focusPoint.z);
+    }
+  }, [focusPoint, camera, controlsRef]);
+
   return <OrbitControls ref={controlsRef} args={[camera, gl.domElement]} />;
 }
 
-function ThreeScene({ points }: ThreeSceneProps) {
+function ThreeScene({ points, focusPoint, onResetView }: ThreeSceneProps) {
   const [showAxes, setShowAxes] = useState(true);
   const controlsRef = useRef<any>(null);
 
   const resetView = () => {
     if (controlsRef.current) {
       controlsRef.current.reset();
+      onResetView();  // 调用父组件的重置函数
     }
   };
 
@@ -135,7 +146,7 @@ function ThreeScene({ points }: ThreeSceneProps) {
           camera={{ position: [5, 5, 5], fov: 75 }}
           style={{ background: '#1a1a1a' }}
         >
-          <CameraController controlsRef={controlsRef} />
+          <CameraController controlsRef={controlsRef} focusPoint={focusPoint} />
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Points points={points} />
