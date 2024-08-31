@@ -17,7 +17,7 @@ const darkTheme = createTheme({
   },
 });
 
-function Points({ points }: ThreeSceneProps) {
+function Points({ points }: { points: Point[] }) {
   return (
     <>
       {points.map((point, index) => (
@@ -151,6 +151,8 @@ function ThreeScene({ points, focusPoint, onResetView }: ThreeSceneProps) {
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Points points={points} />
           <gridHelper args={[100, 100, '#444444', '#222222']} />
+          <gridHelper args={[100, 100, '#444444', '#222222']} rotation={[Math.PI / 2, 0, 0]} />
+          <gridHelper args={[100, 100, '#444444', '#222222']} rotation={[0, 0, Math.PI / 2]} />
           <AxisArrows visible={showAxes} />
           <AxisLabels visible={showAxes} />
         </Canvas>
