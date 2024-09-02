@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #1a1a1a;
+  background-color: #f0f0f0;
 }
 
 #root {
@@ -17,16 +17,32 @@ body, html {
 }
 
 .app-title {
-  color: white;
+  color: #333;
   margin-bottom: 1rem !important;
   text-align: center;
+}
+
+.main-content {
+  flex-grow: 1;
+  height: calc(100vh - 80px);
+}
+
+.left-panel {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.right-panel {
+  height: 100%;
 }
 
 .input-section, .list-section {
   padding: 1rem;
   margin-bottom: 1rem;
-  background-color: #2a2a2a;
-  color: white;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .scene-container {
@@ -34,37 +50,47 @@ body, html {
   overflow: hidden;
   background-color: #2a2a2a;
   position: relative;
+  border-radius: 4px;
 }
 
-.point-input-form {
+.point-input-form,
+.line-input-form,
+.surface-input-form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
-  align-items: center;
 }
 
-.point-input-field {
-  flex: 1;
-  min-width: 100px;
+.point-input-field,
+.line-input-field,
+.surface-input-field {
+  width: 100%;
 }
 
-.add-point-button {
-  flex: 1;
-  min-width: 120px;
+.add-point-button,
+.add-line-button,
+.add-surface-button {
+  align-self: flex-end;
 }
 
-.point-list-item {
+.point-list-item,
+.line-list-item,
+.surface-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
 }
 
-.point-list-text {
+.point-list-text,
+.line-list-text,
+.surface-list-text {
   flex-grow: 1;
 }
 
-.point-list-actions {
+.point-list-actions,
+.line-list-actions,
+.surface-list-actions {
   display: flex;
   gap: 0.5rem;
 }

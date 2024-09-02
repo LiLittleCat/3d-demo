@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import PointInput from './components/PointInput';
+import LineInput from './components/LineInput';
+import SurfaceInput from './components/SurfaceInput';
 import PointList from './components/PointList';
+import LineList from './components/LineList';
+import SurfaceList from './components/SurfaceList';
 import ThreeScene from './components/ThreeScene';
-import { Point } from './types';
+import { Point, Line, Surface } from './types';
 import './App.css';
 
 function App() {
   const [points, setPoints] = useState<Point[]>([]);
-  const [focusPoint, setFocusPoint] = useState<Point | null>(null);
+  const [lines, setLines] = useState<Line[]>([]);
+  const [surfaces, setSurfaces] = useState<Surface[]>([]);
+  const [focusElement, setFocusElement] = useState<Point | Line | Surface | null>(null);
 
   const addPoint = (point: Point) => {
     setPoints([...points, point]);
@@ -22,22 +28,38 @@ function App() {
     setPoints(points.map((p, i) => i === index ? updatedPoint : p));
   };
 
-  const handleFocusPoint = (point: Point) => {
-    setFocusPoint(null);  // 先清除焦点
-    setTimeout(() => setFocusPoint(point), 0);  // 然后在下一个事件循环中设置新的焦点
+  const addLine = (line: Line) => {
+    setLines([...lines, line]);
+  };
+
+  const deleteLine = (index: number) => {
+    setLines(lines.filter((_, i) => i !== index));
+  };
+
+  const addSurface = (surface: Surface) => {
+    setSurfaces([...surfaces, surface]);
+  };
+
+  const deleteSurface = (index: number) => {
+    setSurfaces(surfaces.filter((_, i) => i !== index));
+  };
+
+  const handleFocusElement = (element: Point | Line | Surface) => {
+    setFocusElement(null);
+    setTimeout(() => setFocusElement(element), 0);
   };
 
   const handleResetView = () => {
-    setFocusPoint(null);  // 重置视图时清除焦点
+    setFocusElement(null);
   };
 
   return (
     <Container maxWidth={false} disableGutters className="app-container">
       <Typography variant="h4" component="h1" className="app-title">
-        3D 点可视化工具
+        3D 点、线、面可视化工具
       </Typography>
-      <Grid container spacing={2} style={{ height: 'calc(100vh - 80px)' }}>
-        <Grid item xs={12} md={4} style={{ height: '100%', overflowY: 'auto' }}>
+      <Grid container spacing={2} className="main-content">
+        <Grid item xs={12} md={4} className="left-panel">
           <Paper elevation={3} className="input-section">
             <Typography variant="h6" gutterBottom>
               添加新点
@@ -48,19 +70,53 @@ function App() {
             <Typography variant="h6" gutterBottom>
               点列表
             </Typography>
-            <PointList 
-              points={points} 
-              onDeletePoint={deletePoint} 
+            <PointList
+              points={points}
+              onDeletePoint={deletePoint}
               onUpdatePoint={updatePoint}
-              onFocusPoint={handleFocusPoint}
+              onFocusPoint={handleFocusElement}
+            />
+          </Paper>
+          <Paper elevation={3} className="input-section">
+            <Typography variant="h6" gutterBottom>
+              添加新线
+            </Typography>
+            <LineInput onAddLine={addLine} points={points} />
+          </Paper>
+          <Paper elevation={3} className="list-section">
+            <Typography variant="h6" gutterBottom>
+              线列表
+            </Typography>
+            <LineList
+              lines={lines}
+              onDeleteLine={deleteLine}
+              onFocusLine={handleFocusElement}
+            />
+          </Paper>
+          <Paper elevation={3} className="input-section">
+            <Typography variant="h6" gutterBottom>
+              添加新面
+            </Typography>
+            <SurfaceInput onAddSurface={addSurface} />
+          </Paper>
+          <Paper elevation={3} className="list-section">
+            <Typography variant="h6" gutterBottom>
+              面列表
+            </Typography>
+            <SurfaceList
+              surfaces={surfaces}
+              onDeleteSurface={deleteSurface}
+              onFocusSurface={handleFocusElement}
             />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={8} style={{ height: '100%' }}>
+        <Grid item xs={12} md={8} className="right-panel">
           <Paper elevation={3} className="scene-container">
             <ThreeScene 
               points={points} 
-              focusPoint={focusPoint} 
+              lines={lines}
+              surfaces={surfaces}
+              focusElement={focusElement} 
               onResetView={handleResetView}
             />
           </Paper>
