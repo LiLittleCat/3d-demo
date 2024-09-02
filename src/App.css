@@ -61,16 +61,24 @@ body, html {
   gap: 1rem;
 }
 
+.input-button-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* 添加间距 */
+}
+
 .point-input-field,
 .line-input-field,
 .surface-input-field {
-  width: 100%;
+  flex: 1;
+  height: 56px;
 }
 
 .add-point-button,
 .add-line-button,
 .add-surface-button {
-  align-self: flex-end;
+  margin-left: 1rem;
+  height: 53px; /* 设置高度 */
 }
 
 .point-list-item,

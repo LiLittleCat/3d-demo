@@ -12,8 +12,8 @@ function SurfaceInput({ onAddSurface }: SurfaceInputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const [px, py, pz] = point.split(/[,; ]+/).map(parseFloat);
-    const [nx, ny, nz] = normal.split(/[,; ]+/).map(parseFloat);
+    const [px, py, pz] = point.split(/[,; ，]+/).map(parseFloat);
+    const [nx, ny, nz] = normal.split(/[,; ，]+/).map(parseFloat);
     if (!isNaN(px) && !isNaN(py) && !isNaN(pz) && !isNaN(nx) && !isNaN(ny) && !isNaN(nz)) {
       onAddSurface({
         point: { x: px, y: py, z: pz },

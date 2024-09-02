@@ -1,20 +1,99 @@
-import React, { useState } from 'react';
-import { Container, Grid, Paper, Typography } from '@mui/material';
-import PointInput from './components/PointInput';
-import LineInput from './components/LineInput';
-import SurfaceInput from './components/SurfaceInput';
-import PointList from './components/PointList';
-import LineList from './components/LineList';
-import SurfaceList from './components/SurfaceList';
-import ThreeScene from './components/ThreeScene';
-import { Point, Line, Surface } from './types';
-import './App.css';
+import { useState } from "react";
+import { Container, Grid, Paper, Typography } from "@mui/material";
+import PointInput from "./components/PointInput";
+import SegmentInput from "./components/SegmentInput.tsx";
+import SurfaceInput from "./components/SurfaceInput";
+import PointList from "./components/PointList";
+import SegmentList from "./components/SegmentList.tsx";
+import SurfaceList from "./components/SurfaceList";
+import ThreeScene from "./components/ThreeScene";
+import { Point, Segment, Surface, SurfaceWithPoints } from "./types";
+import "./App.css";
 
 function App() {
-  const [points, setPoints] = useState<Point[]>([]);
-  const [lines, setLines] = useState<Line[]>([]);
-  const [surfaces, setSurfaces] = useState<Surface[]>([]);
-  const [focusElement, setFocusElement] = useState<Point | Line | Surface | null>(null);
+  // const [points, setPoints] = useState<Point[]>([]);
+  // const [segments, setSegments] = useState<Segment[]>([]);
+  // const [surfaces, setSurfaces] = useState<Surface[]>([]);
+
+  {
+    /* {-598.495409; -145.201744; 19.246379}
+
+{-490.6269382036; -881.610935457; 40.2515697023}
+{-922.9818606379; -811.6307535138; 27.668782065}
+{-910.2241820963; -776.9872241474; -218.0167938667}
+{-477.8695255836; -846.967359332; -205.4340388838} */
+  }
+
+  const [points, setPoints] = useState<Point[]>([
+    { x: -598.495409, y: -145.201744, z: 19.246379 },
+    { x: -490.6269382036, y: -881.610935457, z: 40.2515697023 },
+    { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+    { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+    { x: -477.8695255836, y: -846.967359332, z: -205.4340388838 },
+  ]);
+  const [segments, setSegments] = useState<Segment[]>([
+    {
+      start: { x: -598.495409, y: -145.201744, z: 19.246379 },
+      end: { x: -490.6269382036, y: -881.610935457, z: 40.2515697023 },
+    },
+    {
+      start: { x: -598.495409, y: -145.201744, z: 19.246379 },
+      end: { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+    },
+    {
+      start: { x: -598.495409, y: -145.201744, z: 19.246379 },
+      end: { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+    },
+    {
+      start: { x: -598.495409, y: -145.201744, z: 19.246379 },
+      end: { x: -477.8695255836, y: -846.967359332, z: -205.4340388838 },
+    },
+    {
+      start: { x: -490.6269382036, y: -881.610935457, z: 40.2515697023 },
+      end: { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+    },
+    {
+      start: { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+      end: { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+    },
+    {
+      start: { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+      end: { x: -477.8695255836, y: -846.967359332, z: -205.4340388838 },
+    },
+    {
+      start: { x: -477.8695255836, y: -846.967359332, z: -205.4340388838 },
+      end: { x: -490.6269382036, y: -881.610935457, z: 40.2515697023 },
+    },
+  ]);
+  const [surfaces, setSurfaces] = useState<(Surface | SurfaceWithPoints)[]>([
+    {
+      point: { x: -598.495409, y: -145.201744, z: 19.246379 },
+      normal: { x: 1, y: 1, z: 1 },
+      color: "lightblue",
+      width: 100,
+      height: 100,
+    },
+    {
+      points: [
+        { x: -490.6269382036, y: -881.610935457, z: 40.2515697023 },
+        { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+        { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+      ],
+      color: "lightblue",
+    },
+    {
+      points: [
+        { x: -477.8695255836, y: -846.967359332, z: -205.4340388838 },
+        { x: -910.2241820963, y: -776.9872241474, z: -218.0167938667 },
+        { x: -922.9818606379, y: -811.6307535138, z: 27.668782065 },
+      ],
+      color: "lightblue",
+    },
+  ]);
+
+  const [focusElement, setFocusElement] = useState<
+    Point | Segment | Surface | SurfaceWithPoints | null
+  >(null);
 
   const addPoint = (point: Point) => {
     setPoints([...points, point]);
@@ -25,15 +104,15 @@ function App() {
   };
 
   const updatePoint = (index: number, updatedPoint: Point) => {
-    setPoints(points.map((p, i) => i === index ? updatedPoint : p));
+    setPoints(points.map((p, i) => (i === index ? updatedPoint : p)));
   };
 
-  const addLine = (line: Line) => {
-    setLines([...lines, line]);
+  const addSegment = (segment: Segment) => {
+    setSegments([...segments, segment]);
   };
 
-  const deleteLine = (index: number) => {
-    setLines(lines.filter((_, i) => i !== index));
+  const deleteSegment = (index: number) => {
+    setSegments(segments.filter((_, i) => i !== index));
   };
 
   const addSurface = (surface: Surface) => {
@@ -44,7 +123,9 @@ function App() {
     setSurfaces(surfaces.filter((_, i) => i !== index));
   };
 
-  const handleFocusElement = (element: Point | Line | Surface) => {
+  const handleFocusElement = (
+    element: Point | Segment | Surface | SurfaceWithPoints,
+  ) => {
     setFocusElement(null);
     setTimeout(() => setFocusElement(element), 0);
   };
@@ -56,7 +137,7 @@ function App() {
   return (
     <Container maxWidth={false} disableGutters className="app-container">
       <Typography variant="h4" component="h1" className="app-title">
-        3D 点、线、面可视化工具
+        3D 可视化工具
       </Typography>
       <Grid container spacing={2} className="main-content">
         <Grid item xs={12} md={4} className="left-panel">
@@ -79,18 +160,18 @@ function App() {
           </Paper>
           <Paper elevation={3} className="input-section">
             <Typography variant="h6" gutterBottom>
-              添加新线
+              添加新线段
             </Typography>
-            <LineInput onAddLine={addLine} points={points} />
+            <SegmentInput onAddSegment={addSegment} />
           </Paper>
           <Paper elevation={3} className="list-section">
             <Typography variant="h6" gutterBottom>
-              线列表
+              线段列表
             </Typography>
-            <LineList
-              lines={lines}
-              onDeleteLine={deleteLine}
-              onFocusLine={handleFocusElement}
+            <SegmentList
+              segments={segments}
+              onDeleteSegment={deleteSegment}
+              onFocusSegment={handleFocusElement}
             />
           </Paper>
           <Paper elevation={3} className="input-section">
@@ -112,11 +193,11 @@ function App() {
         </Grid>
         <Grid item xs={12} md={8} className="right-panel">
           <Paper elevation={3} className="scene-container">
-            <ThreeScene 
-              points={points} 
-              lines={lines}
+            <ThreeScene
+              points={points}
+              segments={segments}
               surfaces={surfaces}
-              focusElement={focusElement} 
+              focusElement={focusElement}
               onResetView={handleResetView}
             />
           </Paper>

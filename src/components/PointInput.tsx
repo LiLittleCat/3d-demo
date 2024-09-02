@@ -15,10 +15,10 @@ function PointInput({ onAddPoint }: PointInputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const sanitizedInput = point.replace(/[^\d.,; \n-]/g, '');
+    const sanitizedInput = point.replace(/[^\d.,; ，-]/g, '');
     const pointStrings = sanitizedInput.split('\n');
     pointStrings.forEach(pointString => {
-      const [x, y, z] = pointString.split(/[,; ]+/).map(parseFloat);
+      const [x, y, z] = pointString.split(/[,; ，]+/).map(parseFloat);
       onAddPoint({ x, y, z });
     });
     setPoint('');
@@ -26,22 +26,24 @@ function PointInput({ onAddPoint }: PointInputProps) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} className="point-input-form">
-      <TextField
-        className="point-input-field"
-        label="X, Y, Z (逗号, 分号或空格区分)"
-        value={point}
-        onChange={handleChange}
-        variant="outlined"
-      />
-      <Button 
-        className="add-point-button"
-        type="submit" 
-        variant="contained" 
-        color="primary"
-        size="large"
-      >
-        添加点
-      </Button>
+      <Box className="input-button-container">
+        <TextField
+          className="point-input-field"
+          label="X, Y, Z (逗号, 分号或空格区分)"
+          value={point}
+          onChange={handleChange}
+          variant="outlined"
+        />
+        <Button 
+          className="add-point-button"
+          type="submit" 
+          variant="contained" 
+          color="primary"
+          size="large"
+        >
+          添加点
+        </Button>
+      </Box>
     </Box>
   );
 }
