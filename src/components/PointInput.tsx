@@ -7,45 +7,29 @@ interface PointInputProps {
 }
 
 function PointInput({ onAddPoint }: PointInputProps) {
-  const [point, setPoint] = useState<Point>({ x: 0, y: 0, z: 0 });
+  const [point, setPoint] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPoint({ ...point, [name]: parseFloat(value) });
+    setPoint(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAddPoint(point);
-    setPoint({ x: 0, y: 0, z: 0 });
+    const sanitizedInput = point.replace(/[^\d.,; \n-]/g, '');
+    const pointStrings = sanitizedInput.split('\n');
+    pointStrings.forEach(pointString => {
+      const [x, y, z] = pointString.split(/[,; ]+/).map(parseFloat);
+      onAddPoint({ x, y, z });
+    });
+    setPoint('');
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} className="point-input-form">
       <TextField
         className="point-input-field"
-        name="x"
-        label="X"
-        type="number"
-        value={point.x}
-        onChange={handleChange}
-        variant="outlined"
-      />
-      <TextField
-        className="point-input-field"
-        name="y"
-        label="Y"
-        type="number"
-        value={point.y}
-        onChange={handleChange}
-        variant="outlined"
-      />
-      <TextField
-        className="point-input-field"
-        name="z"
-        label="Z"
-        type="number"
-        value={point.z}
+        label="X, Y, Z (逗号, 分号或空格区分)"
+        value={point}
         onChange={handleChange}
         variant="outlined"
       />

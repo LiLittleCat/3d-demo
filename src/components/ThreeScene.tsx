@@ -150,9 +150,9 @@ function ThreeScene({ points, focusPoint, onResetView }: ThreeSceneProps) {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Points points={points} />
-          <gridHelper args={[100, 100, '#444444', '#222222']} />
-          <gridHelper args={[100, 100, '#444444', '#222222']} rotation={[Math.PI / 2, 0, 0]} />
-          <gridHelper args={[100, 100, '#444444', '#222222']} rotation={[0, 0, Math.PI / 2]} />
+          <gridHelper args={[2000, 2000, '#444444', '#222222']} />
+          <gridHelper args={[2000, 2000, '#444444', '#222222']} rotation={[Math.PI / 2, 0, 0]} />
+          <gridHelper args={[2000, 2000, '#444444', '#222222']} rotation={[0, 0, Math.PI / 2]} />
           <AxisArrows visible={showAxes} />
           <AxisLabels visible={showAxes} />
         </Canvas>

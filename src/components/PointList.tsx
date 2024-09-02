@@ -12,21 +12,25 @@ interface PointListProps {
 
 function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: PointListProps) {
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [editPoint, setEditPoint] = useState<Point>({ x: 0, y: 0, z: 0 });
+  const [editPoint, setEditPoint] = useState<string>('');
 
   const handleEdit = (index: number) => {
     setEditIndex(index);
-    setEditPoint(points[index]);
+    setEditPoint(`${points[index].x}, ${points[index].y}, ${points[index].z}`);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setEditPoint({ ...editPoint, [name]: parseFloat(value) });
+    setEditPoint(e.target.value);
   };
 
   const handleUpdate = () => {
     if (editIndex !== null) {
-      onUpdatePoint(editIndex, editPoint);
+      const sanitizedInput = editPoint.replace(/[^\d.,; \n-]/g, '');
+      const pointStrings = sanitizedInput.split('\n');
+      pointStrings.forEach((pointString, idx) => {
+        const [x, y, z] = pointString.split(/[,; ]+/).map(parseFloat);
+        onUpdatePoint(editIndex + idx, { x, y, z });
+      });
       setEditIndex(null);
     }
   };
@@ -44,28 +48,8 @@ function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: Point
               <Box className="edit-point-form">
                 <TextField
                   className="edit-point-field"
-                  name="x"
-                  label="X"
-                  type="number"
-                  value={editPoint.x}
-                  onChange={handleChange}
-                  size="small"
-                />
-                <TextField
-                  className="edit-point-field"
-                  name="y"
-                  label="Y"
-                  type="number"
-                  value={editPoint.y}
-                  onChange={handleChange}
-                  size="small"
-                />
-                <TextField
-                  className="edit-point-field"
-                  name="z"
-                  label="Z"
-                  type="number"
-                  value={editPoint.z}
+                  label="X, Y, Z (逗号, 分号或空格区分)"
+                  value={editPoint}
                   onChange={handleChange}
                   size="small"
                 />
