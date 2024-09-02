@@ -1,17 +1,19 @@
-# 3D 点坐标可视化
+# 3D Point Coordinate Visualization
 
-这是一个基于 React、TypeScript 和 Three.js 的 3D 点坐标可视化工具。
+[中文](README_CN.md)
 
-## 功能特点
+This is a 3D point coordinate visualization tool based on React, TypeScript, and Three.js.
 
-- 交互式 3D 坐标系可视化
-- 添加、编辑和删除 3D 点坐标
-- 实时更新 3D 场景中的点
-- 清晰的坐标轴标识（X、Y、Z 和原点 O）
-- 可调节的网格背景
-- 响应式设计，适应不同屏幕尺寸
+## Features
 
-## 技术栈
+- Interactive 3D coordinate system visualization
+- Add, edit, and delete 3D point coordinates
+- Real-time updates of points in the 3D scene
+- Clear axis labels (X, Y, Z, and origin O)
+- Adjustable grid background
+- Responsive design to adapt to different screen sizes
+
+## Tech Stack
 
 - React
 - TypeScript
@@ -19,49 +21,50 @@
 - Three.js / React Three Fiber
 - Material-UI
 
-## 使用说明
+## Instructions
 
-1. 在左侧面板的输入框中输入 X、Y、Z 坐标值。
-2. 点击"添加点"按钮将新的点添加到列表和 3D 场景中。
-3. 在点列表中，您可以编辑或删除已添加的点。
-4. 3D 场景会实时更新以反映点的添加、编辑或删除。
-5. 使用鼠标或触控板与 3D 场景交互：
-   - 左键拖动：旋转视图
-   - 右键拖动：平移视图
-   - 滚轮：缩放视图
+1. Enter the X, Y, Z coordinate values in the input fields on the left panel.
+2. Click the "Add Point" button to add the new point to the list and the 3D scene.
+3. In the point list, you can edit or delete the added points.
+4. The 3D scene will update in real-time to reflect the addition, editing, or deletion of points.
+5. Use the mouse or touchpad to interact with the 3D scene:
+   - Left-click and drag: Rotate the view
+   - Right-click and drag: Pan the view
+   - Scroll wheel: Zoom in/out
 
-## 安装和运行
+## Installation and Running
 
-1. 克隆仓库：
+1. Clone the repository:
 
    ```
-   git clone [仓库URL]
+   git clone https://github.com/LiLittleCat/3d-demo.git
    ```
 
-2. 安装依赖：
+2. Install dependencies:
 
    ```
    pnpm install
    ```
 
-3. 启动开发服务器：
+3. Start the development server:
 
    ```
    pnpm dev
    ```
 
-4. 在浏览器中打开 `http://localhost:5173` 查看应用。
+4. Open `http://localhost:5173` in your browser to view the application.
 
-## 构建生产版本
+## Build for Production
 
-运行以下命令构建生产版本：
+Run the following command to build the production version:
 
 ```
 pnpm build
 ```
 
-构建后的文件将位于 `dist` 目录中。
+The build files will be located in the `dist` directory.
 
-## 贡献
+## Contribution
 
-欢迎提交 issues 和 pull requests 来改进这个项目。
+Contributions are welcome! Feel free to submit issues and pull requests to improve this project.
+
