@@ -17,6 +17,7 @@ export interface Surface {
   color?: string;
   width?: number;
   height?: number;
+  normalLength?: number;
 }
 
 export interface SurfaceWithPoints {
@@ -24,4 +25,5 @@ export interface SurfaceWithPoints {
   color?: string;
   width?: number;
   height?: number;
+  normalLength?: number;
 }

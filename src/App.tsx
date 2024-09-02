@@ -124,7 +124,7 @@ function App() {
   };
 
   const handleFocusElement = (
-    element: Point | Segment | Surface | SurfaceWithPoints,
+    element: Point | Segment | Surface | SurfaceWithPoints
   ) => {
     setFocusElement(null);
     setTimeout(() => setFocusElement(element), 0);

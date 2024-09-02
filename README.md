@@ -67,4 +67,3 @@ The build files will be located in the `dist` directory.
 ## Contribution
 
 Contributions are welcome! Feel free to submit issues and pull requests to improve this project.
-

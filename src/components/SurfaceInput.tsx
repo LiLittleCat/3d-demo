@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
-import { Surface } from '../types';
+import React, { useState } from "react";
+import { TextField, Button, Box } from "@mui/material";
+import { Surface } from "../types";
 
 interface SurfaceInputProps {
   onAddSurface: (surface: Surface) => void;
 }
 
 function SurfaceInput({ onAddSurface }: SurfaceInputProps) {
-  const [point, setPoint] = useState<string>('');
-  const [normal, setNormal] = useState<string>('');
+  const [point, setPoint] = useState<string>("");
+  const [normal, setNormal] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const [px, py, pz] = point.split(/[,; ，]+/).map(parseFloat);
     const [nx, ny, nz] = normal.split(/[,; ，]+/).map(parseFloat);
-    if (!isNaN(px) && !isNaN(py) && !isNaN(pz) && !isNaN(nx) && !isNaN(ny) && !isNaN(nz)) {
+    if (
+      !isNaN(px) &&
+      !isNaN(py) &&
+      !isNaN(pz) &&
+      !isNaN(nx) &&
+      !isNaN(ny) &&
+      !isNaN(nz)
+    ) {
       onAddSurface({
         point: { x: px, y: py, z: pz },
         normal: { x: nx, y: ny, z: nz },
       });
-      setPoint('');
-      setNormal('');
+      setPoint("");
+      setNormal("");
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} className="surface-input-form">
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      className="surface-input-form"
+    >
       <TextField
         className="surface-input-field"
         label="平面上的点 X, Y, Z (逗号, 分号或空格区分)"
@@ -44,10 +55,10 @@ function SurfaceInput({ onAddSurface }: SurfaceInputProps) {
         fullWidth
         margin="normal"
       />
-      <Button 
+      <Button
         className="add-surface-button"
-        type="submit" 
-        variant="contained" 
+        type="submit"
+        variant="contained"
         color="primary"
         size="large"
         fullWidth

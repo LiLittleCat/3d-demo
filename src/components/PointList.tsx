@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Button, TextField, Box, IconButton } from '@mui/material';
-import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
-import { Point } from '../types';
+import React, { useState } from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  TextField,
+  Box,
+  IconButton,
+} from "@mui/material";
+import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
+import { Point } from "../types";
 
 interface PointListProps {
   points: Point[];
@@ -10,9 +18,14 @@ interface PointListProps {
   onFocusPoint: (point: Point) => void;
 }
 
-function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: PointListProps) {
+function PointList({
+  points,
+  onDeletePoint,
+  onUpdatePoint,
+  onFocusPoint,
+}: PointListProps) {
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [editPoint, setEditPoint] = useState<string>('');
+  const [editPoint, setEditPoint] = useState<string>("");
 
   const handleEdit = (index: number) => {
     setEditIndex(index);
@@ -25,8 +38,8 @@ function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: Point
 
   const handleUpdate = () => {
     if (editIndex !== null) {
-      const sanitizedInput = editPoint.replace(/[^\d.,; \n-]/g, '');
-      const pointStrings = sanitizedInput.split('\n');
+      const sanitizedInput = editPoint.replace(/[^\d.,; \n-]/g, "");
+      const pointStrings = sanitizedInput.split("\n");
       pointStrings.forEach((pointString, idx) => {
         const [x, y, z] = pointString.split(/[,; ]+/).map(parseFloat);
         onUpdatePoint(editIndex + idx, { x, y, z });
@@ -53,7 +66,12 @@ function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: Point
                   onChange={handleChange}
                   size="small"
                 />
-                <Button onClick={handleUpdate} variant="contained" size="small" className="update-point-button">
+                <Button
+                  onClick={handleUpdate}
+                  variant="contained"
+                  size="small"
+                  className="update-point-button"
+                >
                   更新
                 </Button>
               </Box>
@@ -62,11 +80,21 @@ function PointList({ points, onDeletePoint, onUpdatePoint, onFocusPoint }: Point
                 <IconButton onClick={() => onFocusPoint(point)} size="small">
                   <LocationSearchingIcon />
                 </IconButton>
-                <ListItemText primary={`点 ${index + 1}: (${point.x}, ${point.y}, ${point.z})`} />
-                <Button onClick={() => handleEdit(index)} color="primary" size="small">
+                <ListItemText
+                  primary={`点 ${index + 1}: (${point.x}, ${point.y}, ${point.z})`}
+                />
+                <Button
+                  onClick={() => handleEdit(index)}
+                  color="primary"
+                  size="small"
+                >
                   编辑
                 </Button>
-                <Button onClick={() => onDeletePoint(index)} color="error" size="small">
+                <Button
+                  onClick={() => onDeletePoint(index)}
+                  color="error"
+                  size="small"
+                >
                   删除
                 </Button>
               </>

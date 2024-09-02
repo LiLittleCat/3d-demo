@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
-import { Point } from '../types';
+import React, { useState } from "react";
+import { TextField, Button, Box } from "@mui/material";
+import { Point } from "../types";
 
 interface PointInputProps {
   onAddPoint: (point: Point) => void;
 }
 
 function PointInput({ onAddPoint }: PointInputProps) {
-  const [point, setPoint] = useState<string>('');
+  const [point, setPoint] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoint(e.target.value);
@@ -15,13 +15,13 @@ function PointInput({ onAddPoint }: PointInputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const sanitizedInput = point.replace(/[^\d.,; ，-]/g, '');
-    const pointStrings = sanitizedInput.split('\n');
-    pointStrings.forEach(pointString => {
+    const sanitizedInput = point.replace(/[^\d.,; ，-]/g, "");
+    const pointStrings = sanitizedInput.split("\n");
+    pointStrings.forEach((pointString) => {
       const [x, y, z] = pointString.split(/[,; ，]+/).map(parseFloat);
       onAddPoint({ x, y, z });
     });
-    setPoint('');
+    setPoint("");
   };
 
   return (
@@ -34,10 +34,10 @@ function PointInput({ onAddPoint }: PointInputProps) {
           onChange={handleChange}
           variant="outlined"
         />
-        <Button 
+        <Button
           className="add-point-button"
-          type="submit" 
-          variant="contained" 
+          type="submit"
+          variant="contained"
           color="primary"
           size="large"
         >
